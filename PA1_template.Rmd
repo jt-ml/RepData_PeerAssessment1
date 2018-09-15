@@ -8,18 +8,52 @@ output:
 
 ## Loading and preprocessing the data
 
-
-
+```{r, cache=TRUE}
+data.url <- 'https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip'
+data.zipfile <- './activity.monitoring.data.zip'
+download.file(data.url, data.zipfile)
+unzip(data.zipfile)
+steps.data <- read.csv('activity.csv', header = TRUE)
+steps.data$date <- as.Date(steps.data$date)
+head(steps.data)
+```
 ## What is mean total number of steps taken per day?
+```{r}
+library(dplyr)
+steps.daily.total <- steps.data %>% 
+    group_by(date) %>% 
+    summarise(steps_total = sum(steps, na.rm = TRUE))
 
+hist(steps.daily.total$steps_total, 
+     main='Total steps taken per day',
+     xlab = 'Total steps per day')
 
+```
+
+The mean of total number of steps taken per day
+```{r}
+mean(steps.daily.total$steps_total)
+```
+
+The median of totla number of steps taken per day
+```{r}
+median(steps.daily.total$steps_total)
+
+```
 
 ## What is the average daily activity pattern?
 
+```{r}
+steps.daily.average <- steps.data %>% 
+    group_by(date) %>% 
+    summarise(steps_mean = mean(steps, na.rm = TRUE))
+  
 
+```
 
 ## Imputing missing values
 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
