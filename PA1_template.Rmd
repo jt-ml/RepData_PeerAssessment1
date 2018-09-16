@@ -26,7 +26,9 @@ steps.daily.total <- steps.data %>%
 
 hist(steps.daily.total$steps_total, 
      main='Total steps taken per day',
-     xlab = 'Total steps per day')
+     xlab = 'Total steps per day',
+     breaks = seq(0, 25000, by = 1000),
+     col = 'green')
 
 ```
 
@@ -42,18 +44,56 @@ median(steps.daily.total$steps_total)
 ```
 
 ## What is the average daily activity pattern?
+1. Make a time series plot (i.e. type="l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```{r}
-steps.daily.average <- steps.data %>% 
-    group_by(date) %>% 
+## calculate average number of steps on each 5-minute interval
+steps.interval.average <- steps.data %>% 
+    group_by(interval) %>% 
     summarise(steps_mean = mean(steps, na.rm = TRUE))
   
+## plot a line chat 
+plot(x = steps.interval.average$interval,
+     y = steps.interval.average$steps_mean,
+     main = 'Average Daily Activity Pattern',
+     xlab = '5-minute intervals',
+     ylab = 'Average Steps Taken Daily',
+     col = 'green',
+     type = 'l')
+```
+
+2. Report which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps
+```{r}
+max.steps <- steps.interval.average$interval[which.max(steps.interval.average$steps_mean)]
+max.steps
 
 ```
 
+
 ## Imputing missing values
 
+1. Calculate and report the total number of missing values in the dataset.
+```{r}
+sum(is.na(steps.data$steps))
+```
 
+2. Devise a strategy for filling in all of the missing values in the dataset.
+```{r}
+
+```
+
+3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+```{r}
+
+```
+
+4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
+```{r}
+
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+```{r}
+
+```
